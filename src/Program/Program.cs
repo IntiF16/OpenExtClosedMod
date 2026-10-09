@@ -28,38 +28,24 @@ namespace Ucu.Poo.PersonExporter
             };
 
             ReportGenerator generator = new ReportGenerator();
-
-            Console.WriteLine("Seleccione el formato de reporte:");
-            Console.WriteLine("1 - HTML");
-            Console.WriteLine("2 - PDF");
-            Console.Write("Opción: ");
-
-            string option = Console.ReadLine();
             string format;
             string outputPath;
 
-            if (option == "1")
+            Dictionary<string,Type> DisplayableExports = generator.ExportTypes;
+            Console.WriteLine("Elije el tipo de archivo para exportar");
+            foreach (string key in DisplayableExports.Keys)
             {
-                format = "HTML";
-                outputPath = "persons-report.html";
+                Console.WriteLine(key);
             }
-            else if (option == "2")
-            {
-                format = "PDF";
-                outputPath = "persons-report.pdf";
-            }
-            else
-            {
-                Console.WriteLine("Opción no válida. Saliendo del programa.");
-                return;
-            }
+            string TypeName = Console.ReadLine();
+            TypeName = TypeName.ToUpper();
+            Type type = DisplayableExports[TypeName];
+            string result = generator.GenerateReport(people,type);
 
-            bool result = generator.GenerateReport(people, format, outputPath);
-
-            if (result)
+            if (!string.IsNullOrEmpty(result))
             {
                 Console.WriteLine("Reporte generado en el directorio actual:");
-                Console.WriteLine(outputPath);
+                Console.WriteLine(result);
             }
             else
             {

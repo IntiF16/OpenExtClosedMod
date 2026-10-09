@@ -25,10 +25,17 @@
                 "/p:CoverletOutput=lcov.info"
             ],
             "problemMatcher": "$msCompile",
+            "group": "build"
+        },
+        {
+            "type": "dotnet",
+            "task": "build",
             "group": {
-                "kind": "test",
+                "kind": "build",
                 "isDefault": true
-            }
+            },
+            "problemMatcher": [],
+            "label": "dotnet: build"
         }
     ]
 }
